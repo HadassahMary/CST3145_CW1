@@ -26,50 +26,60 @@
                     <li><a href="#courses">Courses</a></li>
                 </ul>
             </nav>
-            <button class="checkout">
+            <button class="checkout" v-on:click="showCheckout" v-if="cartItemCount >= 1">
+                <span class="fas fa-cart-plus">&nbsp &nbsp Checkout</span>
+                <span>{{cartItemCount}}</span>
+            </button>
+            <button class="checkout" disabled='disabled' v-else>
                 <span class="fas fa-cart-plus">&nbsp &nbsp Checkout</span>
             </button>
         </header>
+        <div v-if="showLessons">
+            <section class="home" id="home">
+                <h1>After School Club</h1>
+                <p>Engage in artistic, creative, physical and scientific activities</p>
 
-        <section class="home" id="home">
-            <h1>After School Club</h1>
-            <p>Engage in artistic, creative, physical and scientific activities</p>
-
-        </section>
-        <section class="about" id="about">
-            <div class="about_image">
-                <img src="images/about.png" alt="Girl Studying">
-            </div>
-            <div class="content">
-                <h3>Why Choose Us?</h3>
-                <p>At this After School Club, we believe in a holistic approach to learning and encourage our students to 
-                    broaden their horizons and explore their talents by participating in one of our after-school clubs. Clubs generally meet 
-                    once a week and include a wide range of opportunities for activities including, but not limited 
-                    to, photography, drama, sports, music, and art.</p>
-                <p>Several studies have shown that extracurricular activities for children 
-                    improve academic performance, including study habits and raw grades. 
-                    Children's behavior is also improved, reducing the occurrence of negative social issues at school</p>
-            </div>
-        </section>
-        <section class="course" id="courses">
-            <h1>Our Courses</h1>
-            <div class="main" >
-                <div class="lesson_cards" id="lesson.id" v-for="lesson in lessons">
-                    <div class="image">
-                        <img v-bind:src="lesson.image" alt="Lesson Image">
-                    </div>
-                    <div class="title"><p>{{lesson.subject}}</p></div>
-                    <div class="location">{{lesson.location}}</div>
-                    <div class="price">{{lesson.price}} AED <br>
-                        <div>
+            </section>
+            <section class="about" id="about">
+                <div class="about_image">
+                    <img src="images/about.png" alt="Girl Studying">
+                </div>
+                <div class="content">
+                    <h3>Why Choose Us?</h3>
+                    <p>At this After School Club, we believe in a holistic approach to learning and encourage our students to 
+                        broaden their horizons and explore their talents by participating in one of our after-school clubs. Clubs generally meet 
+                        once a week and include a wide range of opportunities for activities including, but not limited 
+                        to, photography, drama, sports, music, and art.</p>
+                    <p>Several studies have shown that extracurricular activities for children 
+                        improve academic performance, including study habits and raw grades. 
+                        Children's behavior is also improved, reducing the occurrence of negative social issues at school</p>
+                </div>
+            </section>
+            <section class="course" id="courses">
+                <h1>Our Courses</h1>
+                <div class="main" >
+                    <div class="lesson_cards" id="lesson.id" v-for="lesson in lessons">
+                        <div class="image">
+                            <img v-bind:src="lesson.image" alt="Lesson Image">
+                        </div>
+                        <div class="title"><p>{{lesson.subject}}</p></div>
+                        <div class="location">Location: {{lesson.location}}</div>
+                        <div class="spaces">Spaces Left: {{lesson.spaces}}</div>
+                        <div class="price">{{lesson.price}} AED </div>
+                        <div class="rating">
                             <span v-for="n in lesson.rating"><i class="fas fa-star"></i></span>
                             <span v-for= "n in 5-lesson.rating"><i class="far fa-star"></i></span>
                         </div>
-                        <button class="addToCart">Add to Cart</button>
+                            <button class="addToCart" v-on:click = "addLessonToCart(lesson)">Add to Cart</button>
+                        
+                        
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+    </div>
+    <div class="checkoutPage" v-else>
+        <h3>CheckOut!</h3>
+    </div>
     </div>
     
     <script>
@@ -77,7 +87,23 @@
             el: "#app",
             data: {
                 sitename: "After School Club",
-                lessons: lessons
+                lessons: lessons,
+                showLessons: true,
+                cart: []
+            },
+            methods:{
+                showCheckout(){
+                    this.showLessons = this.showLessons ? false : true;
+                },
+                addLessonToCart(lesson){
+                    lesson.spaces -= 1;
+                    this.cart.push(lesson);
+                }
+            },
+            computed: {
+                cartItemCount(){
+                    return this.cart.length || '';
+                }
             }
         })
     </script>

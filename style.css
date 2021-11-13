@@ -89,7 +89,24 @@ header .navbar ul li a:hover{
     letter-spacing: 0.5px;
     text-align: center;
 }
-
+.checkout:disabled{
+    background: transparent;
+    color: rgb(151, 147, 147);
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+}
+.checkout:disabled:hover{
+    cursor: auto;
+}
+.checkout:disabled::after, .checkout:disabled::before{
+    border: 2px solid rgb(151, 147, 147);
+    
+}
+.checkout:disabled:hover::after, .checkout:disabled:hover::before{
+    border: 2px solid rgb(151, 147, 147);
+    
+}
 .checkout::after, .checkout::before{
     border: 2px solid #fff;
     border-radius: 4px;
@@ -153,7 +170,7 @@ header .navbar ul li a:hover{
     /* background-image: linear-gradient(to bottom , white, #b0ece0 ); */
     background: #fff;
     border-radius: 12px;
-    border: 1px solid whitesmoke;
+    border: 1px solid rgb(218, 215, 215);
     margin: 40px;
     box-shadow: 5px 3px 5px #FFC727;
 }
@@ -176,13 +193,15 @@ header .navbar ul li a:hover{
     text-align: center;
     font-size: 2rem;
 }
-.location, .price{
+.location, .price, .spaces, .rating{
     margin-top: 15px;
     font-size: 1.5rem;
-    text-align: center;
+    text-align: left;
+    margin-left: 25px;
 }
 .addToCart{
-    margin-top: 20px;
+    margin-left: 75px;
+    margin-top: 25px;
     margin-bottom: 20px;
     padding: 10px;
     color: #666;
@@ -202,4 +221,13 @@ header .navbar ul li a:hover{
     color: white;
     cursor: pointer;
     box-shadow:  2px 1px 2px #78b075;
+}
+.checkoutPage{
+    padding-top: 100px;
+    
+}
+.checkoutPage h3{
+    font-size: 3rem;
+    color: #666;
+    text-align: center;
 }
