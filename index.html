@@ -8,25 +8,79 @@
     <script src="https://unpkg.com/vue"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
     <script src="lessons.js"></script>
 </head>
 <body>
     <!-- Making a Pet Depot -->
+    
     <div id="app">
         <header>
-            <h1 v-text="sitename"></h1>
-            <button class="cartItem" >
-                <span class="fas fa-cart-plus">Checkout</span>
+            <a href="#" class="logo">LOGO</a>
+            <nav class="navbar">
+                <ul>
+                    <li><a class="active" href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                </ul>
+            </nav>
+            <button class="checkout">
+                <span class="fas fa-cart-plus">&nbsp &nbsp Checkout</span>
             </button>
         </header>
-        <main>
-          
 
-        </main>
+        <section class="home" id="home">
+            <h1>After School Club</h1>
+            <p>Engage in artistic, creative, physical and scientific activities</p>
 
+        </section>
+        <section class="about" id="about">
+            <div class="about_image">
+                <img src="images/about.png" alt="Girl Studying">
+            </div>
+            <div class="content">
+                <h3>Why Choose Us?</h3>
+                <p>At this After School Club, we believe in a holistic approach to learning and encourage our students to 
+                    broaden their horizons and explore their talents by participating in one of our after-school clubs. Clubs generally meet 
+                    once a week and include a wide range of opportunities for activities including, but not limited 
+                    to, photography, drama, sports, music, and art.</p>
+                <p>Several studies have shown that extracurricular activities for children 
+                    improve academic performance, including study habits and raw grades. 
+                    Children's behavior is also improved, reducing the occurrence of negative social issues at school</p>
+            </div>
+        </section>
+        <section class="course" id="courses">
+            <h1>Our Courses</h1>
+            <div class="main" >
+                <div class="lesson_cards" id="lesson.id" v-for="lesson in lessons">
+                    <div class="image">
+                        <img v-bind:src="lesson.image" alt="Lesson Image">
+                    </div>
+                    <div class="title"><p>{{lesson.subject}}</p></div>
+                    <div class="location">{{lesson.location}}</div>
+                    <div class="price">{{lesson.price}} AED <br>
+                        <div>
+                            <span v-for="n in lesson.rating"><i class="fas fa-star"></i></span>
+                            <span v-for= "n in 5-lesson.rating"><i class="far fa-star"></i></span>
+                        </div>
+                        <button class="addToCart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
     
-    
+    <script>
+        var schoolClub = new Vue({
+            el: "#app",
+            data: {
+                sitename: "After School Club",
+                lessons: lessons
+            }
+        })
+    </script>
 
 
     
