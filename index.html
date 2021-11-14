@@ -58,12 +58,23 @@
                 </div>
             </section>
             <section class="course" id="courses">
-                <h1>Club Activities to Choose From</h1>
-                <select v-model="sorters.type">
+                <h1>Club Activities to Choose From</h1> <br><br>
+                <select v-model="sorters.type" class="dropdown">
                     <option disabled value="Sort">Sort</option>
                     <option v-for="(sort, key) in sorts" v-bind:value="sort">{{key}}</option>
                 </select>  
-                <span>{{sorters.type}} hello</span>
+                
+                    <span class="radios">
+                        <input type="radio" id="asc" value="ascending" v-model="sorters.order" >
+                        <label for="asc" class="radioButton">Ascending</label>
+                    </span>
+                    
+                    <span class="radios">
+                        <input type="radio" id="dec" value="descending" v-model="sorters.order">
+                        <label for="dec" class="radioButton">Descending</label>
+                    </span>
+                    
+                
                 <div class="main" v-if = "sorters.type == 'Sort' ">
                     <div class="lesson_cards" id="lesson.id" v-for="lesson in lessons">
                         <div class="image">
@@ -143,7 +154,7 @@
                 sorts: {
                     price : "Price",
                     location : "Location",
-                    name : "Subject"
+                    subject : "Subject"
                 },
                 showLessons: true,
                 cart: []
@@ -171,10 +182,11 @@
                     let count = 0;
                     lesson.spaces += 1;
                     for(let i = 0; i < this.cart.length; i++){
-                        if(count <= 1){
+                        if(count < 1){
                             if(this.cart[i].id === lesson.id){
                                 this.cart.splice(i, 1);
                             }
+                            count++;
                         }
                     }
                 },
@@ -183,18 +195,86 @@
                 },
                 sortLessons(lesson){
                     if(this.sorters.type == "Price"){
-                        console.log("here");
-                    }
-                    function compare(a,b){
-                        if(a.price > b.price){
-                            return 1;
+                        console.log("Price");
+                        if(this.sorters.order == "descending"){
+                            function compare(a,b){
+                                if(a.price > b.price){
+                                    return -1;
+                                }
+                                if(a.price < b.price){
+                                    return 1;
+                                }
+                                return 0;
+                            }
+                            return lesson.sort(compare);
                         }
-                        if(a.price < b.price){
-                            return -1;
+                        else{
+                            function compare(a,b){
+                                if(a.price > b.price){
+                                    return 1;
+                                }
+                                if(a.price < b.price){
+                                    return -1;
+                                }
+                                return 0;
+                            }
+                            return lesson.sort(compare);
                         }
-                        return 0;
                     }
-                    return lesson.sort(compare);
+                    else if(this.sorters.type == "Location"){
+                        console.log("Loaction");
+                        if(this.sorters.order == "descending"){
+                            function compare(a,b){
+                                if(a.location > b.location){
+                                    return -1;
+                                }
+                                if(a.location < b.location){
+                                    return 1;
+                                }
+                                return 0;
+                            }
+                            return lesson.sort(compare);
+                        }
+                        else{
+                            function compare(a,b){
+                                if(a.location > b.location){
+                                    return 1;
+                                }
+                                if(a.location < b.location){
+                                    return -1;
+                                }
+                                return 0;
+                            }
+                            return lesson.sort(compare);
+                        }
+                    }
+                    else if(this.sorters.type == "Subject"){
+                        console.log("Subject");
+                        if(this.sorters.order == "descending"){
+                            function compare(a,b){
+                                if(a.subject > b.subject){
+                                    return -1;
+                                }
+                                if(a.subject < b.subject){
+                                    return 1;
+                                }
+                                return 0;
+                            }
+                            return lesson.sort(compare);
+                        }
+                        else{
+                            function compare(a,b){
+                                if(a.subject > b.subject){
+                                    return 1;
+                                }
+                                if(a.subject < b.subject){
+                                    return -1;
+                                }
+                                return 0;
+                            }
+                            return lesson.sort(compare);
+                        }
+                    }
                 }
             },
             computed: {
