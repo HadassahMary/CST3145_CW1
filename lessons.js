@@ -1,7 +1,7 @@
 let lessons = [
     {
         "id": 1001,
-        "subject": "Math",
+        "subject": "Mathematics",
         "location": 'Cambridge',
         "price": 150,
         "spaces": "5",

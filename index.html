@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- https://fontawesome.com/icons -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,7 @@
     
     <div id="app">
         <header>
-            <a href="#" class="logo">LOGO</a>
+            <a href="#" class="logo"><i class="fas fa-school" style="font-size: 25px;background: -webkit-linear-gradient(#f3b3c6, #f7e0a2);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">&nbsp ASC</i></a>
             <nav class="navbar">
                 <ul>
                     <li><a class="active" href="#home">Home</a></li>
@@ -57,8 +58,13 @@
                 </div>
             </section>
             <section class="course" id="courses">
-                <h1>Our Courses</h1>
-                <div class="main" >
+                <h1>Club Activities to Choose From</h1>
+                <select v-model="sorters.type">
+                    <option disabled value="Sort">Sort</option>
+                    <option v-for="(sort, key) in sorts" v-bind:value="sort">{{key}}</option>
+                </select>  
+                <span>{{sorters.type}} hello</span>
+                <div class="main" v-if = "sorters.type == 'Sort' ">
                     <div class="lesson_cards" id="lesson.id" v-for="lesson in lessons">
                         <div class="image">
                             <img v-bind:src="lesson.image" alt="Lesson Image">
@@ -66,7 +72,26 @@
                         <div class="title"><p>{{lesson.subject}}</p></div>
                         <div class="location">Location: {{lesson.location}}</div>
                         <div class="spaces">Spaces Left: {{lesson.spaces}}</div>
-                        <div class="price">{{lesson.price}} AED </div>
+                        <div class="price">{{lesson.price}} £ </div>
+                        <div class="rating">
+                            <span v-for="n in lesson.rating"><i class="fas fa-star"></i></span>
+                            <span v-for= "n in 5-lesson.rating"><i class="far fa-star"></i></span>
+                        </div>
+                            <button class="addToCart" v-on:click = "addLessonToCart(lesson)" v-if="canAddToCart(lesson)">Add to Cart</button>
+                            <button class="addToCart" disabled = "disabled" v-else>Add to Cart</button>
+                            <span class="button_information" v-if = "lesson.spaces == 0">All Out!</span>
+                        
+                    </div>
+                </div>
+                <div class="main" v-else>
+                    <div class="lesson_cards" id="lesson.id" v-for="lesson in sortLessons(lessons)">
+                        <div class="image">
+                            <img v-bind:src="lesson.image" alt="Lesson Image">
+                        </div>
+                        <div class="title"><p>{{lesson.subject}}</p></div>
+                        <div class="location">Location: {{lesson.location}}</div>
+                        <div class="spaces">Spaces Left: {{lesson.spaces}}</div>
+                        <div class="price">{{lesson.price}} £ </div>
                         <div class="rating">
                             <span v-for="n in lesson.rating"><i class="fas fa-star"></i></span>
                             <span v-for= "n in 5-lesson.rating"><i class="far fa-star"></i></span>
@@ -88,8 +113,7 @@
                 </div>
                 <div class="title"><p>{{lesson.subject}}</p></div>
                 <div class="location">Location: {{lesson.location}}</div>
-                <div class="price">{{lesson.price}} AED </div>
-                <div class="price" v-text= "cartCount(lesson.id)"></div>
+                <div class="price">{{lesson.price}} £ </div>
                 <div class="rating">
                     <span v-for="n in lesson.rating"><i class="fas fa-star"></i></span>
                     <span v-for= "n in 5-lesson.rating"><i class="far fa-star"></i></span>
@@ -112,6 +136,15 @@
             data: {
                 sitename: "After School Club",
                 lessons: lessons,
+                sorters: {
+                    type: "Sort",
+                    order: "ascending"
+                },
+                sorts: {
+                    price : "Price",
+                    location : "Location",
+                    name : "Subject"
+                },
                 showLessons: true,
                 cart: []
             },
@@ -147,6 +180,21 @@
                 },
                 reloadPage(){
                     location.reload();
+                },
+                sortLessons(lesson){
+                    if(this.sorters.type == "Price"){
+                        console.log("here");
+                    }
+                    function compare(a,b){
+                        if(a.price > b.price){
+                            return 1;
+                        }
+                        if(a.price < b.price){
+                            return -1;
+                        }
+                        return 0;
+                    }
+                    return lesson.sort(compare);
                 }
             },
             computed: {
