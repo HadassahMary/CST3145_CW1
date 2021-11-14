@@ -73,9 +73,13 @@
                         <input type="radio" id="dec" value="descending" v-model="sorters.order">
                         <label for="dec" class="radioButton">Descending</label>
                     </span>
+                    <span class="searchBox">
+                        <i class="fas fa-search" style="height: 100px; width: 20px;"></i> &nbsp
+                        <input type="text" v-model="sorters.search"  placeholder="search something..."> <p></p>
+                    </span>
                     
                 
-                <div class="main" v-if = "sorters.type == 'Sort' ">
+                <div class="main" v-if = "sorters.type == 'Sort' && sorters.search == ''">
                     <div class="lesson_cards" id="lesson.id" v-for="lesson in lessons">
                         <div class="image">
                             <img v-bind:src="lesson.image" alt="Lesson Image">
@@ -94,8 +98,27 @@
                         
                     </div>
                 </div>
-                <div class="main" v-else>
+                <div class="main" v-else-if = "sorters.type != 'Sort' && sorters.search == ''">
                     <div class="lesson_cards" id="lesson.id" v-for="lesson in sortLessons(lessons)">
+                        <div class="image">
+                            <img v-bind:src="lesson.image" alt="Lesson Image">
+                        </div>
+                        <div class="title"><p>{{lesson.subject}}</p></div>
+                        <div class="location">Location: {{lesson.location}}</div>
+                        <div class="spaces">Spaces Left: {{lesson.spaces}}</div>
+                        <div class="price">{{lesson.price}} £ </div>
+                        <div class="rating">
+                            <span v-for="n in lesson.rating"><i class="fas fa-star"></i></span>
+                            <span v-for= "n in 5-lesson.rating"><i class="far fa-star"></i></span>
+                        </div>
+                            <button class="addToCart" v-on:click = "addLessonToCart(lesson)" v-if="canAddToCart(lesson)">Add to Cart</button>
+                            <button class="addToCart" disabled = "disabled" v-else>Add to Cart</button>
+                            <span class="button_information" v-if = "lesson.spaces == 0">All Out!</span>
+                        
+                    </div>
+                </div>
+                <div class="main" v-else> <p>{{sorters.search}}</p>
+                    <div class="lesson_cards" id="lesson.id" v-for="lesson in searchedLessons(lessons)">
                         <div class="image">
                             <img v-bind:src="lesson.image" alt="Lesson Image">
                         </div>
@@ -149,13 +172,15 @@
                 lessons: lessons,
                 sorters: {
                     type: "Sort",
-                    order: "ascending"
+                    order: "ascending",
+                    search: ""
                 },
                 sorts: {
                     price : "Price",
                     location : "Location",
                     subject : "Subject"
                 },
+                searchTerm: '',
                 showLessons: true,
                 cart: []
             },
@@ -274,6 +299,21 @@
                             }
                             return lesson.sort(compare);
                         }
+                    }
+                },
+                searchedLessons(lessonArray){
+                    console.log(lessonArray.length)
+                    var returnlessons = []
+                    if(this.sorters.search != ''){
+                        for(let i = 0; i < lessonArray.length; i++){
+                            var subjectL = lessonArray[i].subject.toLowerCase();
+                            var locationL = lessonArray[i].location.toLowerCase();
+                            var searched = this.sorters.search.toLowerCase();
+                            if(subjectL.includes(searched) || locationL.includes(searched)){
+                                returnlessons.push(lessonArray[i]);
+                            }
+                        }
+                        return returnlessons;
                     }
                 }
             },
