@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel = "shortcut icon" type = "image/x-icon" href = "images/favicon.svg">
     <script src="lessons.js"></script>
 </head>
 <body>
@@ -70,8 +71,9 @@
                             <span v-for="n in lesson.rating"><i class="fas fa-star"></i></span>
                             <span v-for= "n in 5-lesson.rating"><i class="far fa-star"></i></span>
                         </div>
-                            <button class="addToCart" v-on:click = "addLessonToCart(lesson)">Add to Cart</button>
-                        
+                            <button class="addToCart" v-on:click = "addLessonToCart(lesson)" v-if="canAddToCart(lesson)">Add to Cart</button>
+                            <button class="addToCart" disabled = "disabled" v-else>Add to Cart</button>
+                            <span class="button_information" v-if = "lesson.spaces == 0">All Out!</span>
                         
                     </div>
                 </div>
@@ -79,6 +81,28 @@
     </div>
     <div class="checkoutPage" v-else>
         <h3>CheckOut!</h3>
+        <div class="main" v-if = "this.cart.length > 0" >
+            <div class="lesson_cards" id="lesson.id" v-for="lesson in this.cart" >
+                <div class="image">
+                    <img v-bind:src="lesson.image" alt="Lesson Image">
+                </div>
+                <div class="title"><p>{{lesson.subject}}</p></div>
+                <div class="location">Location: {{lesson.location}}</div>
+                <div class="price">{{lesson.price}} AED </div>
+                <div class="price" v-text= "cartCount(lesson.id)"></div>
+                <div class="rating">
+                    <span v-for="n in lesson.rating"><i class="fas fa-star"></i></span>
+                    <span v-for= "n in 5-lesson.rating"><i class="far fa-star"></i></span>
+                </div>
+                    <button class="removeButton" v-on:click = "remove(lesson)" >
+                        <span  class="fas fa-trash-alt">&nbsp Remove</span> 
+                    </button>
+            </div>
+        </div>
+        <div class="main" v-else>
+            <button v-on:click = "reloadPage()" class = "goBackBtn"><span  class="fas fa-arrow-left">&nbsp Back To Products</span>
+                </button>
+        </div>
     </div>
     </div>
     
@@ -98,6 +122,31 @@
                 addLessonToCart(lesson){
                     lesson.spaces -= 1;
                     this.cart.push(lesson);
+                },
+                canAddToCart(lesson){
+                    return lesson.spaces > 0;
+                },
+                cartCount(id){
+                    let count = 0;
+                    for(let i = 0; i < this.cart.length; i++){
+                        if(this.cart[i].id === id)
+                            count++;  
+                    }
+                    return count;
+                },
+                remove(lesson){
+                    let count = 0;
+                    lesson.spaces += 1;
+                    for(let i = 0; i < this.cart.length; i++){
+                        if(count <= 1){
+                            if(this.cart[i].id === lesson.id){
+                                this.cart.splice(i, 1);
+                            }
+                        }
+                    }
+                },
+                reloadPage(){
+                    location.reload();
                 }
             },
             computed: {
