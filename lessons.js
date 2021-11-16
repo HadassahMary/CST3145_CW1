@@ -1,3 +1,4 @@
+//JS file with the list of lessons
 let lessons = [
     {
         "id": 1001,

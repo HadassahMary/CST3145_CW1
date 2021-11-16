@@ -1,3 +1,6 @@
+/* CSS Styling sheet */
+
+/* Styling for all elements */
 *{
     font-family: 'Open Sans', sans-serif;
     margin: 0;
@@ -9,6 +12,8 @@
     text-transform: capitalize;
     transition: all .2s linear;
 }
+
+/* Style for text selection on page */
 *::selection{
     background: #f4c1d0;
     color: rgb(107, 106, 106);
@@ -18,11 +23,14 @@ html{
     overflow-x: hidden;
 }
 
+/* Styling for all section */
 section{
     min-height: 100vh;
     padding: 1rem 7%;
     padding-top: 6rem;
 }
+
+/* Styling for elements in the header section********************************************** */
 header{
     width: 100%;
     display: flex;
@@ -40,6 +48,8 @@ header .logo{
     color: #fff;
     font-size: 2.5rem;
 }
+
+/* Styling for navigation bar */
 header .navbar ul{
     display: flex;
     align-items: center;
@@ -56,7 +66,10 @@ header .navbar ul li a{
 header .navbar ul li a:hover{
     color: #78b075
 }
+/* End of Navigation bar styling */
+/* End of styling for header ***********************************************************/
 
+/* Styling for home or cover page********************************************** */
 .home{
     display: flex;
     align-items: center;
@@ -65,11 +78,9 @@ header .navbar ul li a:hover{
     background: url(images/background.jpg) no-repeat;
     background-size: cover;
     background-position: center;
-    /* background-attachment: fixed; */
     position: relative;
     text-align: center;
 }
-
 .home h1{
     font-size: 6rem;
     color: #666;
@@ -80,7 +91,8 @@ header .navbar ul li a:hover{
     padding: 1rem 0;
     width: 70rem;
 }
-
+/* End of Styling for home or cover page********************************************** */
+/* Styling for checkout button ********************************************** */
 .checkout{
     background: transparent;
     color: #fff;
@@ -88,6 +100,7 @@ header .navbar ul li a:hover{
     letter-spacing: 0.5px;
     text-align: center;
 }
+/* When button is disabled */
 .checkout:disabled{
     background: transparent;
     color: rgb(151, 147, 147);
@@ -106,6 +119,7 @@ header .navbar ul li a:hover{
     border: 2px solid rgb(151, 147, 147);
     
 }
+/* When button is not disabled */
 .checkout::after, .checkout::before{
     border: 2px solid #fff;
     border-radius: 4px;
@@ -130,6 +144,8 @@ header .navbar ul li a:hover{
     transform: translate(3px, 3px);
     border: 2px solid #9ec7e3;
 }
+/* End of Styling for checkout button********************************************** */
+/* Styling for "About" Section********************************************** */
 .about{
     display: flex;
     align-items: center;
@@ -155,6 +171,8 @@ header .navbar ul li a:hover{
     color: #666;
     padding: 1rem 0;
 }
+/* End of Styling for "About" Section********************************************** */
+/* Styling for "Lessons" Section********************************************** */
 .course h1{
     font-size: 3.5rem;
     color: #666;
@@ -163,10 +181,11 @@ header .navbar ul li a:hover{
 .main{
     margin-left: 5%;
 }
+
+/* Styling for the lesson cards */
 .lesson_cards{
     display: inline-block;
     width: 25%; 
-    /* background-image: linear-gradient(to bottom , white, #b0ece0 ); */
     background: #fff;
     border-radius: 12px;
     border: 1px solid rgb(218, 215, 215);
@@ -228,8 +247,6 @@ header .navbar ul li a:hover{
     border-radius: 5px;
     background-color: transparent;
 }
-
-
 .addToCart:hover{
     cursor: pointer;
     border: 1.5px solid #ffd562;
@@ -240,9 +257,12 @@ header .navbar ul li a:hover{
     cursor: pointer;
     box-shadow:  2px 1px 2px #78b075;
 }
+/* End of styling of lesson cards */
+/* End of Styling for "Lesosn" Section********************************************** */
+
+/* Styling for Checkout page********************************************** */
 .checkoutPage{
-    padding-top: 100px;
-    
+    padding-top: 100px; 
 }
 .checkoutPage h3{
     font-size: 3rem;
@@ -293,6 +313,9 @@ header .navbar ul li a:hover{
     cursor: pointer;
     box-shadow:  2px 1px 2px #78b075;
 }
+/* End of Styling for Checkout page********************************************** */
+
+/* Styling for "Sort" dropdown********************************************** */
 .dropdown{
     border: 1.5px solid #666;
     border-radius: 4px;
@@ -301,8 +324,6 @@ header .navbar ul li a:hover{
     font-size: 1.5rem;
     font-weight: bolder;
     letter-spacing: 2px;
-
-    
 }
 .dropdown:hover{
     cursor: pointer;
@@ -319,10 +340,13 @@ header .navbar ul li a:hover{
     font-size: 1.25rem;
     background-color: #fff;
 }
+/* Styling for ascending/descending radio button********************************************** */
 .radios{
     font-size: 1.5rem;
     margin-left: 15px;
 }
+
+/* Styling for Search box********************************************** */
 .searchBox{
     width: 250px;
     height: 40px;
@@ -334,6 +358,8 @@ header .navbar ul li a:hover{
     border-radius: 4px;
     box-sizing: border-box;
   }
+
+  /* Styling for Checkout form********************************************** */
 .checkoutInput{
     width: 250px;
     height: 40px;
@@ -387,3 +413,5 @@ header .navbar ul li a:hover{
     color: white;
     box-shadow:  2px 1px 2px #fff;
 }
+/* End of Styling for Checkout form********************************************** */
+/* End of code********************************************** */
