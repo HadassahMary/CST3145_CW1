@@ -239,7 +239,7 @@
         </div>
         <!-- If all products are removed from cart, button is displayed to take back to the products page -->
         <div class="main" v-else>
-            <button v-on:click = "reloadPage()" class = "goBackBtn">
+            <button v-on:click = "showLessonPage()" class = "goBackBtn">
                 <span  class="fas fa-arrow-left">&nbsp Back To Products</span>
             </button>
         </div>
@@ -304,7 +304,10 @@
                 showCheckout(){             
                     this.showLessons = this.showLessons ? false : true;
                 },
-
+                //If cart is empty, takes user back to products page
+                showLessonPage(){
+                    this.showLessons = this.showLessons ? false : true;
+                },
                 //Funtion to add lesson to cart
                 addLessonToCart(lesson){    
                     //reduce the spaces by 1
@@ -514,11 +517,7 @@
                 //function to return cart length                
                 cartItemCount(){
                     return this.cart.length || '';
-                },
-                //function to reload the page
-                reloadPage(){
-                    location.reload();
-                },
+                }
             }
         });
     </script>
