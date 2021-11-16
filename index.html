@@ -23,7 +23,7 @@
             <a href="#" class="logo"><i class="fas fa-school" style="font-size: 25px;background: -webkit-linear-gradient(#f3b3c6, #f7e0a2);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">&nbsp ASC</i></a>
             <nav class="navbar">
                 <ul>
-                    <li><a class="active" href="#home">Home</a></li>
+                    <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#courses">Courses</a></li>
                 </ul>
@@ -164,6 +164,23 @@
             <button v-on:click = "reloadPage()" class = "goBackBtn"><span  class="fas fa-arrow-left">&nbsp Back To Products</span>
                 </button>
         </div>
+        
+        <div class="checkoutForm">
+            <strong>Name: </strong>
+            <span class="checkoutInput">
+                <input type="text" v-model="lessonOrder.name"  placeholder="Enter Name..." v-on:keypress = "isLetter($event)">
+            </span>
+            
+            <strong>Phone: </strong>
+            <span class="checkoutInput">
+                <input type="text" v-model="lessonOrder.phone" placeholder="0123" v-on:keypress = "isNumber($event)"> <p></p>
+            </span>
+            
+            <button v-if="lessonOrder.name == '' || lessonOrder.phone == ''" disabled = "disabled">Checkout</button>
+            <button v-else v-on:click = "CheckoutLessons()">Checkout</button>
+            <p style="font-size: 1.5rem; color: red; margin-top: 0; padding-bottom: 70px; padding-left: 10%;">{{lessonOrder.errorMessage}}</p>
+            
+        </div>
     </div>
     </div>
     
@@ -183,7 +200,11 @@
                     location : "Location",
                     subject : "Subject"
                 },
-                searchTerm: '',
+                lessonOrder: {
+                    name: "",
+                    phone: "",
+                    errorMessage: ""
+                },
                 showLessons: true,
                 cart: []
             },
@@ -318,6 +339,34 @@
                         }
                         return returnlessons;
                     }
+                },
+                isLetter(e){
+                    let char = String.fromCharCode(e.keyCode); // Get the character
+                    if(/^[A-Za-z]+$/.test(char)){
+                        this.lessonOrder.errorMessage = "";
+                        return true;
+                    }  // Match with regex 
+                    else{
+                        this.lessonOrder.errorMessage = "Please enter only characters";
+                    } // If not match, don't add to input text
+                },
+                isNumber(e){
+                    if(e.charCode >= 48 && e.charCode <= 57 ){
+                        this.lessonOrder.errorMessage = "";
+                        return true;
+                    }
+                    else{
+                        this.lessonOrder.errorMessage = "Please enter only numbers";
+                    }
+                },
+                CheckoutLessons(){
+                    if(this.lessonOrder.errorMessage == ""){
+                        alert("Successfully placed order!");
+                    }
+                    else{
+                        alert("Please enter the correct values.");
+                    }
+                    
                 }
             },
             computed: {
