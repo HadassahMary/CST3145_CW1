@@ -246,7 +246,7 @@
         
         <!-- Checkout Form -->
         <div class="checkoutForm">
-
+            <strong id="successfulCheckout"></strong>
             <!-- Name input field -->
             <strong>Name: </strong>
             <span class="checkoutInput">
@@ -503,6 +503,10 @@
                 CheckoutLessons(){
                     if(this.lessonOrder.errorMessage == "" && this.cart.length > 0){
                         alert("Successfully placed order!");
+                        document.getElementById('successfulCheckout').innerHTML = "Thank you for purchasing! <br>"
+                        this.lessonOrder.name = "";
+                        this.lessonOrder.phone = "";
+                        this.cart.splice(0, this.cart.length);
                     }
                     else if(this.cart.length == 0){
                         alert("No products in cart!")
